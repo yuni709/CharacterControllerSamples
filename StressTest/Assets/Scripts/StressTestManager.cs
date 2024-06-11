@@ -373,7 +373,11 @@ public partial struct StressTestManagerSystem : ISystem
     [BurstCompile]
     private void SpawnCharacters(ref SystemState state, Singleton singleton)
     {
+        // Create a command buffer
         EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
+        // Reinterpret 同じ値を格納しているクラス同士の型変更
+        // Singleton として存在している BufferComponent から、SpawndCharacter 型の Buffer を取得
+        // Reinterpret IBufferElement である SpawnedCharacter を Entity に変換
         DynamicBuffer<Entity> spawnedCharacters = SystemAPI.GetSingletonBuffer<SpawnedCharacter>().Reinterpret<Entity>();
         
         // Clear spawned characters
@@ -395,9 +399,12 @@ public partial struct StressTestManagerSystem : ISystem
                 {
                     break;
                 }
+                // SpawnedCharacter を生成
                 Entity spawnedCharacter = ecb.Instantiate(singleton.CharacterPrefab);
+                // EntityCommandBuffer に積む。この時、SpawnedCharacter 型の buffer の Entity に、先ほど生成した entity を代入
                 ecb.AppendToBuffer(SystemAPI.GetSingletonEntity<Singleton>(),new SpawnedCharacter { Entity = spawnedCharacter });
                 float3 spawnPos = spawnBottomCorner + (math.right() * x * singleton.CharacterSpacing) + (math.forward() * z * singleton.CharacterSpacing);
+                // Entity 指定で Component 追加
                 ecb.SetComponent(spawnedCharacter, new LocalTransform { Position = spawnPos, Rotation = quaternion.identity, Scale = 1f});
                 counter++;
             }

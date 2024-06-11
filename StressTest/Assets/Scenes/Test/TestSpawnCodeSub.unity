@@ -258,8 +258,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1993026986668121915, guid: d3ff665b9a0454040a387e2476cae889, type: 3}
-  SpawnRadius: 2
-  SpawnCount: 2000
+  SpawnRadius: 100
+  SpawnCount: 10000
   RandomSeed: 100
   IntervalTime: 1
   bLoop: 0

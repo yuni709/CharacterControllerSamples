@@ -219,11 +219,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6259dbfad9c481444b4964ade02a0f06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterPrefab: {fileID: 1993026986668121915, guid: 5dc883acd2ba1db448afadfd207e2cea, type: 3}
+  CharacterPrefab: {fileID: 1692896102597148395, guid: cba9e799f7609e540b0fa47a96f46a06, type: 3}
   EnvironmentPrefabs:
   - {fileID: 1693634942546907769, guid: 88018c8e9dbf26d478932c5c3946bcce, type: 3}
   - {fileID: 6842245506596388095, guid: 4838a0cbc9192e64fafd453a9a3b9164, type: 3}
-  CharacterSpacing: 0
+  CharacterSpacing: 0.001
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

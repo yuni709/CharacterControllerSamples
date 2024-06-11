@@ -22,38 +22,26 @@ public partial struct SpawnSystem : ISystem
 
         if (spawnConfig.ValueRW.ElapsedTime > spawnConfig.ValueRW.IntervalTime)
         {
-            /*
-            var instances = state.EntityManager.Instantiate(spawnConfig.ValueRW.Prefab, spawnConfig.ValueRW.SpawnCount, Allocator.Temp);
-
-            foreach(var entity in instances)
-            {
-                var unitComponent = SystemAPI.GetComponentRW<UnitComponent>(entity);
-                unitComponent.ValueRW.Health = 200;
-            }
-            spawnConfig.ValueRW.ElapsedTime = 0;
-            */
-
             EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
-            // DynamicBuffer<Entity> spawnedCharacters = SystemAPI.GetSingleton<>
             int counter = 0;
             for (int i = 0; counter < spawnConfig.ValueRW.SpawnCount; i++)
             {
                 // Spawn entity.
                 Entity spawnedCharacter = ecb.Instantiate(spawnConfig.ValueRW.Prefab);
-                /*
-                ecb.SetComponent(spawnedCharacter, new LocalTransform 
-                {
-                    Position = new float3(UnityEngine.Random.Range(-spawnConfig.ValueRW.SpawnRadius, 
-                    spawnConfig.ValueRW.SpawnRadius), 
-                    0, 
-                    UnityEngine.Random.Range(-spawnConfig.ValueRW.SpawnRadius, spawnConfig.ValueRW.SpawnRadius)) 
-                });
-                */
                 ecb.SetComponent(spawnedCharacter, new UnitComponent
                 { 
                     Health = 200 
                 });
+
+                float3 spawnPos = new float3
+                (
+                    UnityEngine.Random.Range(-spawnConfig.ValueRW.SpawnRadius, spawnConfig.ValueRW.SpawnRadius),
+                    0, 
+                    UnityEngine.Random.Range(-spawnConfig.ValueRW.SpawnRadius, spawnConfig.ValueRW.SpawnRadius)
+                );
                 counter++;
+
+                ecb.SetComponent(spawnedCharacter, new LocalTransform { Position = spawnPos });
             }
 
             ecb.Playback(state.EntityManager);
